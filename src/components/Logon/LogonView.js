@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function LoginView() {
+function LogonView() {
   const [ userEmail, setUserEmail ] = useState("");
   const [ userPassword, setUserPassword ] = useState("");
 
@@ -13,8 +13,6 @@ function LoginView() {
       email: userEmail,
       password: userPassword
     }
-
-    console.log(body);
   }
 
   return (
@@ -25,7 +23,7 @@ function LoginView() {
         <input type="password" value={ userPassword } onChange={ e=> setUserPassword(e.target.value) } placeholder="Senha" required/>
         <Button type="submit">Entrar</Button>
       </EntraceForm>
-      <Link to="/logon">Primeira vez? Cadastre-se!</Link>
+      <Link to="/login">Primeira vez? Cadastre-se!</Link>
     </MainContainer>
   );
 }
@@ -84,4 +82,4 @@ const Button = styled.button`
   border: none;
 `;
 
-export default LoginView;
+export default LogonView;

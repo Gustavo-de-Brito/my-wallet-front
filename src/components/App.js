@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginView from "./Login/LoginView";
+import LogonView from "./Logon/LogonView";
 import GlobalStyle from "./theme/globalStyle";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={ <LoginView /> } />
+          <Route path="/" element={ <LogonView /> } />
         </Routes>
       </BrowserRouter>
     </>
