@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LogonView from "./Logon/LogonView";
 import LoginView from "./Login/LoginView";
+import SignupView from "./Signup/SignupView";
 import GlobalStyle from "./theme/globalStyle";
 
 function App() {
@@ -9,8 +9,8 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={ <LogonView /> } />
-          <Route path="/login" element={ <LoginView /> } />
+          <Route path="/" element={ <LoginView /> } />
+          <Route path="/sign-up" element={ <SignupView /> } />
         </Routes>
       </BrowserRouter>
     </>

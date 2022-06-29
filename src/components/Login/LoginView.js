@@ -7,16 +7,13 @@ import EntraceForm from "../Shared/GenericStyles/EntraceFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
 function LoginView() {
-  const [ userName, setUserName ] = useState("");
   const [ userEmail, setUserEmail ] = useState("");
   const [ userPassword, setUserPassword ] = useState("");
-  const [ confirmPassword, setconfirmPassword ] = useState("");
 
-  function getUserData() {
-    // TODO: verificar se as senhas sao iguais
+  function getUserData(e) {
+    e.preventDefault();
 
     const body = {
-      name: userName,
       email: userEmail,
       password: userPassword
     }
@@ -26,13 +23,11 @@ function LoginView() {
     <MainContainer>
       <BrandName>MyWallet</BrandName>
       <EntraceForm onSubmit={ getUserData }>
-        <input type="text" value={ userName } onChange={ e => setUserName(e.target.value) } placeholder="Nome" required />
-        <input type="email" value={ userEmail } onChange={ e => setUserEmail(e.target.value) } placeholder="Email" required />
-        <input type="password" value={ userPassword } onChange={ e => setUserPassword(e.target.value) } placeholder="Senha" required />
-        <input type="password" value={ confirmPassword } onChange={ e => setconfirmPassword(e.target.value) } placeholder="Confirme a senha" required />
-        <DefaultButton type="submit">Cadastrar</DefaultButton>
+        <input type="email" value={ userEmail } onChange={ e => setUserEmail(e.target.value) } placeholder="Email" required/>
+        <input type="password" value={ userPassword } onChange={ e=> setUserPassword(e.target.value) } placeholder="Senha" required/>
+        <DefaultButton type="submit">Entrar</DefaultButton>
       </EntraceForm>
-      <Link to="/">Já tem uma conta? Entre agora!</Link>
+      <Link to="/sign-up">Primeira vez? Cadastre-se!</Link>
     </MainContainer>
   );
 }
