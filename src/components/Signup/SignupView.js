@@ -4,7 +4,7 @@ import axios from "axios";
 // Generic components style
 import Brand from "../Shared/Brand";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
-import EntraceForm from "../Shared/GenericStyles/EntraceFormStyle";
+import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
 function SignupView() {
@@ -40,13 +40,13 @@ function SignupView() {
   return (
     <MainContainer>
       <Brand />
-      <EntraceForm onSubmit={ getUserData }>
+      <DefaultForm onSubmit={ getUserData }>
         <input type="text" value={ userName } onChange={ e => setUserName(e.target.value) } placeholder="Nome" required />
         <input type="email" value={ userEmail } onChange={ e => setUserEmail(e.target.value) } placeholder="Email" required />
         <input type="password" value={ userPassword } onChange={ e => setUserPassword(e.target.value) } placeholder="Senha" required />
         <input type="password" value={ confirmPassword } onChange={ e => setconfirmPassword(e.target.value) } placeholder="Confirme a senha" required />
         <DefaultButton type="submit">Cadastrar</DefaultButton>
-      </EntraceForm>
+      </DefaultForm>
       <Link to="/">Já tem uma conta? Entre agora!</Link>
     </MainContainer>
   );

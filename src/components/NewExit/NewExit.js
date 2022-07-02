@@ -4,7 +4,7 @@ import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
-function NewEntrace() {
+function NewExit() {
   const [ value, setValue ] = useState("");
   const [ description, setDescription ] = useState("");
 
@@ -16,12 +16,12 @@ function NewEntrace() {
     <MainContainer>
       <ViewContent>
         <Header>
-          <h2>Nova Entrada</h2>
+          <h2>Nova Saída</h2>
         </Header>
         <DefaultForm onSubmit={ getTransaction } >
           <input value={ value } onChange={ e => setValue(e.target.value) } type="text" placeholder="Valor" required />
           <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
-          <DefaultButton type="submit">Salvar entrada</DefaultButton>
+          <DefaultButton type="submit">Salvar Saída</DefaultButton>
         </DefaultForm>
       </ViewContent>
     </MainContainer>
@@ -44,4 +44,4 @@ const Header = styled.div`
   color: #FFFFFF;
 `;
 
-export default NewEntrace;
+export default NewExit;

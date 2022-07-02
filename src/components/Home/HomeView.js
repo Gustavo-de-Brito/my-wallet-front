@@ -48,7 +48,7 @@ function Home() {
               Nova Entrada
             </DefaultButton>
           </Link>
-          <Link to="/new-entrace">
+          <Link to="/new-exit">
             <DefaultButton>
               <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
               Nova Saída

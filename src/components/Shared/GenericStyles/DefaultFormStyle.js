@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const EntraceForm = styled.form`
+const DefaultForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,4 +21,4 @@ const EntraceForm = styled.form`
   }
 `;
 
-export default EntraceForm;
+export default DefaultForm;
