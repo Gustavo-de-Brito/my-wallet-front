@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 // Generic components style
-import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import Brand from "../Shared/Brand";
+import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import EntraceForm from "../Shared/GenericStyles/EntraceFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
@@ -12,7 +13,9 @@ function SignupView() {
   const [ userPassword, setUserPassword ] = useState("");
   const [ confirmPassword, setconfirmPassword ] = useState("");
 
-  function getUserData(e) {
+  const navigate = useNavigate();
+
+  async function getUserData(e) {
     e.preventDefault();
 
     if(userPassword !== confirmPassword) {
@@ -23,6 +26,14 @@ function SignupView() {
       name: userName,
       email: userEmail,
       password: userPassword
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/sign-up", body);
+
+      navigate("/");
+    } catch (err) {
+      console.log(err);
     }
   }
 
