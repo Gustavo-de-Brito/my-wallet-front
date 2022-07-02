@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // Generic components style
+import Brand from "../Shared/Brand";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
-import BrandName from "../Shared/GenericStyles/BrandNameStyle";
 import EntraceForm from "../Shared/GenericStyles/EntraceFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
@@ -21,7 +21,7 @@ function LoginView() {
 
   return (
     <MainContainer>
-      <BrandName>MyWallet</BrandName>
+      <Brand />
       <EntraceForm onSubmit={ getUserData }>
         <input type="email" value={ userEmail } onChange={ e => setUserEmail(e.target.value) } placeholder="Email" required/>
         <input type="password" value={ userPassword } onChange={ e=> setUserPassword(e.target.value) } placeholder="Senha" required/>
