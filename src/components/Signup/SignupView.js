@@ -12,8 +12,12 @@ function SignupView() {
   const [ userPassword, setUserPassword ] = useState("");
   const [ confirmPassword, setconfirmPassword ] = useState("");
 
-  function getUserData() {
-    // TODO: verificar se as senhas sao iguais
+  function getUserData(e) {
+    e.preventDefault();
+
+    if(userPassword !== confirmPassword) {
+      return alert("As senhas não são iguais");
+    } 
 
     const body = {
       name: userName,
