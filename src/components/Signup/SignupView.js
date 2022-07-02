@@ -29,7 +29,7 @@ function SignupView() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/sign-up", body);
+      await axios.post("http://localhost:5000/sign-up", body);
 
       navigate("/");
     } catch (err) {
