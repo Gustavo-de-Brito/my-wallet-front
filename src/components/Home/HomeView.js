@@ -1,11 +1,37 @@
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import TokenContext from "../contexts/TokenContext";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 import History from "./History";
 import { IoExitOutline } from "react-icons/io5";
-import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io"
+import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io";
 
 function Home() {
+  const [ userData, setUserData ] = useState({});
+  const { token } = useContext(TokenContext);
+
+  useEffect(() => {
+    async function getTransaction() {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      };
+
+      try{
+        const response = await axios.get("http://localhost:5000/transactions", config);
+
+        setUserData(response.data);
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+    getTransaction();
+  }, [token]);
+
   return(
     <MainContainer>
       <ViewContent>
