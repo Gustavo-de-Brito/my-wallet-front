@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
@@ -41,14 +42,18 @@ function Home() {
         </Header>
         <History />
         <InOutButtons>
-          <DefaultButton>
-            <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-            Nova Entrada
-          </DefaultButton>
-          <DefaultButton>
-            <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-            Nova Saída
-          </DefaultButton>
+          <Link to="/new-entrace">
+            <DefaultButton>
+              <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+              Nova Entrada
+            </DefaultButton>
+          </Link>
+          <Link to="/new-entrace">
+            <DefaultButton>
+              <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+              Nova Saída
+            </DefaultButton>
+          </Link>
         </InOutButtons>
       </ViewContent>
     </MainContainer>
@@ -78,11 +83,15 @@ const InOutButtons = styled.div`
   width: 92%;
   margin-top: 14px;
 
+  a {
+    width: 48%;
+  }
+
   button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 48%;
+    width: 100%;
     font-size: 16px;
   }
 `;
