@@ -9,8 +9,8 @@ import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
 function LoginView() {
-  const [ userEmail, setUserEmail ] = useState("almostcleiton@email.com");
-  const [ userPassword, setUserPassword ] = useState("Lga944513#");
+  const [ userEmail, setUserEmail ] = useState("");
+  const [ userPassword, setUserPassword ] = useState("");
   const { setToken } = useContext(TokenContext);
 
   const navigate = useNavigate();

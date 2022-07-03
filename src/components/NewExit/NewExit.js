@@ -1,15 +1,60 @@
+import { useState, useContext } from "react";
+import dayjs from "dayjs";
 import styled from "styled-components";
-import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import TokenContext from "../contexts/TokenContext.js"
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 
 function NewExit() {
-  const [ value, setValue ] = useState("");
+  const [ value, setValue ] = useState("R$ 0.00");
   const [ description, setDescription ] = useState("");
 
-  function getTransaction(e) {
+  const { token } = useContext(TokenContext);
+
+  const navigate = useNavigate();
+
+  async function sendTransaction(e) {
     e.preventDefault();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    const formatedValue = Number(value.replace("R$ ", ""));
+
+    const body = {
+      value: formatedValue,
+      description,
+      type: "exit",
+      date: dayjs().format("DD/MM")
+    };
+
+    try {
+      await axios.post("http://localhost:5000/transactions", body, config);
+
+      navigate("/home");
+    } catch(err) {
+      alert("Ocorreu um erro ao tentar enviar a saida");
+    }
+  }
+
+  function formatMoneyValue(e) {
+    // Tests if was removed or add a number for formatting
+    const moneyRegex = /\.[0-9]{3}$/;
+    const addedNumber = moneyRegex.test(e.target.value);
+    const divisionToDecimal = addedNumber ? 100 : 10000;
+
+    const moneyValue = Number(e.target.value.replace("R$ ", "")) * 1000;
+    const decimalValue = moneyValue / divisionToDecimal;
+
+    if(!isNaN(decimalValue)) {
+      setValue(`R$ ${ decimalValue.toFixed(2) }`);
+    }
   }
 
   return (
@@ -18,8 +63,8 @@ function NewExit() {
         <Header>
           <h2>Nova Saída</h2>
         </Header>
-        <DefaultForm onSubmit={ getTransaction } >
-          <input value={ value } onChange={ e => setValue(e.target.value) } type="text" placeholder="Valor" required />
+        <DefaultForm onSubmit={ sendTransaction } >
+          <input value={ value } onChange={ formatMoneyValue } type="text" placeholder="Valor" required />
           <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
           <DefaultButton type="submit">Salvar Saída</DefaultButton>
         </DefaultForm>
