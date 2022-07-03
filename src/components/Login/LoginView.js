@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
+import UserNameContext from "../contexts/UserNameContext";
 // Generic components style
 import Brand from "../Shared/Brand";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
@@ -11,7 +12,9 @@ import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 function LoginView() {
   const [ userEmail, setUserEmail ] = useState("");
   const [ userPassword, setUserPassword ] = useState("");
+
   const { setToken } = useContext(TokenContext);
+  const { setUserName } = useContext(UserNameContext);
 
   const navigate = useNavigate();
 
@@ -27,6 +30,7 @@ function LoginView() {
       const response = await axios.post("http://localhost:5000/login", body);
 
       setToken(response.data.token);
+      setUserName(response.data.userName);
 
       navigate("/home");
     } catch(err) {

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
+import UserNameContext from "../contexts/UserNameContext";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 import History from "./History";
@@ -11,7 +12,9 @@ import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io";
 
 function Home() {
   const [ userData, setUserData ] = useState({});
+
   const { token } = useContext(TokenContext);
+  const { userName } = useContext(UserNameContext);
 
   useEffect(() => {
     async function getTransaction() {
@@ -37,10 +40,10 @@ function Home() {
     <MainContainer>
       <ViewContent>
         <Header>
-          <h2>Olá, nome</h2>
+          <h2>Olá, { userName }</h2>
           <IoExitOutline style={{color:"#FFFFFF"}} />
         </Header>
-        <History />
+        <History userData={ userData } />
         <InOutButtons>
           <Link to="/new-entrace">
             <DefaultButton>
@@ -75,6 +78,15 @@ const Header = styled.div`
   margin: 24px;
   font-size: 26px;
   font-weight: bold;
+
+  h2 {
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const InOutButtons = styled.div`
