@@ -19,6 +19,11 @@ const DefaultForm = styled.form`
   input::placeholder {
     color: #000000;
   }
+
+  input:disabled {
+    background: #D4D4D4;
+    color: #AFAFAF;
+  }
 `;
 
 export default DefaultForm;

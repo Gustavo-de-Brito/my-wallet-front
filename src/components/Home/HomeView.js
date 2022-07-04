@@ -6,6 +6,7 @@ import TokenContext from "../contexts/TokenContext";
 import UserNameContext from "../contexts/UserNameContext";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
+import ButtonLoading from "../Shared/ButtonLoading";
 import History from "./History";
 import LoginAgainMessage from "../Shared/LoginAgainMessage";
 import { IoExitOutline } from "react-icons/io5";
@@ -14,6 +15,7 @@ import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io";
 function Home() {
   const [ userData, setUserData ] = useState({});
   const [ userUnauthorized, setUserUnauthorized ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const { token, setToken } = useContext(TokenContext);
   const { userName, setUserName } = useContext(UserNameContext);
@@ -39,12 +41,14 @@ function Home() {
       try{
         const response = await axios.get("https://my-wallet726.herokuapp.com/transactions", config);
 
+        setIsLoading(false);
         setUserData(response.data);
       } catch(err) {
         console.log(err);
         if(err.response.status === 401) {
           setUserUnauthorized(true);
         }
+        setIsLoading(false);
       }
     }
 
@@ -66,15 +70,31 @@ function Home() {
           <History userData={ userData } />
           <InOutButtons>
             <Link to="/new-entrace">
-              <DefaultButton>
-                <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-                Nova Entrada
+              <DefaultButton disabled={ isLoading } >
+                {
+                  isLoading
+                  ?
+                  <ButtonLoading widthLoader={ 100 } />
+                  :
+                  <>
+                  <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+                  Nova Entrada
+                  </>
+                }
               </DefaultButton>
             </Link>
             <Link to="/new-exit">
-              <DefaultButton>
-                <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-                Nova Saída
+              <DefaultButton disabled={ isLoading } >
+                {
+                  isLoading
+                  ?
+                  <ButtonLoading widthLoader={ 100 } />
+                  :
+                  <>
+                    <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+                    Nova Saída
+                  </>
+                }
               </DefaultButton>
             </Link>
           </InOutButtons>
@@ -123,6 +143,7 @@ const InOutButtons = styled.div`
   button {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     font-size: 16px;

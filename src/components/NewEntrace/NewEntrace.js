@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ButtonLoading from "../Shared/ButtonLoading.js";
 import TokenContext from "../contexts/TokenContext.js"
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
@@ -12,7 +13,7 @@ import LoginAgainMessage from "../Shared/LoginAgainMessage.js";
 function NewEntrace() {
   const [ value, setValue ] = useState("R$ 0.00");
   const [ description, setDescription ] = useState("");
-
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ userUnauthorized, setUserUnauthorized ] = useState(false);
 
   const { token } = useContext(TokenContext);
@@ -20,6 +21,8 @@ function NewEntrace() {
   const navigate = useNavigate();
 
   async function sendTransaction(e) {
+    setIsLoading(true);
+
     e.preventDefault();
 
     const config = {
@@ -47,6 +50,7 @@ function NewEntrace() {
       } else {
         alert("Ocorreu um erro ao tentar enviar a entrada");
       }
+      setIsLoading(false);
     }
   }
 
@@ -76,9 +80,31 @@ function NewEntrace() {
             <h2>Nova Entrada</h2>
           </Header>
           <DefaultForm onSubmit={ sendTransaction } >
-            <input value={ value } onChange={ formatMoneyValue } type="text" placeholder="Valor" required />
-            <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
-            <DefaultButton type="submit">Salvar entrada</DefaultButton>
+            <input
+              value={ value }
+              disabled={ isLoading }
+              onChange={ formatMoneyValue }
+              type="text"
+              placeholder="Valor"
+              required
+            />
+            <input
+              value={ description }
+              disabled={ isLoading }
+              onChange={ e => setDescription(e.target.value) }
+              type="text"
+              placeholder="Descrição"
+              required
+            />
+            <DefaultButton disabled={ isLoading } type="submit">
+              {
+                isLoading
+                ?
+                <ButtonLoading />
+                :
+                "Salvar entrada"
+              }
+            </DefaultButton>
           </DefaultForm>
         </ViewContent>
       }

@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ButtonLoading from "../Shared/ButtonLoading.js";
 import TokenContext from "../contexts/TokenContext.js"
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
@@ -13,12 +14,14 @@ function NewExit() {
   const [ value, setValue ] = useState("R$ 0.00");
   const [ description, setDescription ] = useState("");
   const [ userUnauthorized, setUserUnauthorized ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const { token } = useContext(TokenContext);
 
   const navigate = useNavigate();
 
   async function sendTransaction(e) {
+    setIsLoading(true);
     e.preventDefault();
 
     const config = {
@@ -46,6 +49,7 @@ function NewExit() {
       } else {
         alert("Ocorreu um erro ao tentar enviar a saída");
       }
+      setIsLoading(false);
     }
   }
 
@@ -75,9 +79,31 @@ function NewExit() {
             <h2>Nova Saída</h2>
           </Header>
           <DefaultForm onSubmit={ sendTransaction } >
-            <input value={ value } onChange={ formatMoneyValue } type="text" placeholder="Valor" required />
-            <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
-            <DefaultButton type="submit">Salvar Saída</DefaultButton>
+            <input
+              value={ value }
+              disabled={ isLoading }
+              onChange={ formatMoneyValue }
+              type="text"
+              placeholder="Valor"
+              required
+            />
+            <input
+              value={ description }
+              disabled={ isLoading }
+              onChange={ e => setDescription(e.target.value) }
+              type="text"
+              placeholder="Descrição"
+              required
+            />
+            <DefaultButton disable={ isLoading } type="submit">
+              {
+                isLoading
+                ?
+                <ButtonLoading widthLoader={ 100 } />
+                :
+                "Salvar Saída"
+              }
+              </DefaultButton>
           </DefaultForm>
         </ViewContent>
       }

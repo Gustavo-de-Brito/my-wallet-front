@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 // Generic components style
 import Brand from "../Shared/Brand";
+import ButtonLoading from "../Shared/ButtonLoading";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
@@ -15,8 +16,11 @@ function SignupView() {
   const [ confirmPassword, setconfirmPassword ] = useState("");
 
   const navigate = useNavigate();
+  const [ isLoading, setIsLoading ] = useState(false);
 
   async function getUserData(e) {
+    setIsLoading(true);
+
     e.preventDefault();
 
     if(userPassword !== confirmPassword) {
@@ -40,6 +44,7 @@ function SignupView() {
       } else if(err.respnse.status === 409) {
         alert("Email já cadastrado");
       }
+      setIsLoading(false);
     }
   }
 
@@ -47,10 +52,38 @@ function SignupView() {
     <MainContainer>
       <Brand />
       <DefaultForm onSubmit={ getUserData }>
-        <input type="text" value={ userName } onChange={ e => setUserName(e.target.value) } placeholder="Nome" required />
-        <input type="email" value={ userEmail } onChange={ e => setUserEmail(e.target.value) } placeholder="Email" required />
-        <input type="password" value={ userPassword } onChange={ e => setUserPassword(e.target.value) } placeholder="Senha" required />
-        <input type="password" value={ confirmPassword } onChange={ e => setconfirmPassword(e.target.value) } placeholder="Confirme a senha" required />
+        <input
+          type="text"
+          disabled={ isLoading }
+          value={ userName }
+          onChange={ e => setUserName(e.target.value) }
+          placeholder="Nome"
+          required
+        />
+        <input
+          type="email"
+          disabled={ isLoading }
+          value={ userEmail }
+          onChange={ e => setUserEmail(e.target.value) }
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          disabled={ isLoading }
+          value={ userPassword }
+          onChange={ e => setUserPassword(e.target.value) }
+          placeholder="Senha"
+          required
+        />
+        <input
+          type="password"
+          disabled={ isLoading }
+          value={ confirmPassword }
+          onChange={ e => setconfirmPassword(e.target.value) }
+          placeholder="Confirme a senha"
+          required
+        />
         <PasswordRulesContainer>
           <span>A senha deve conter:</span>
           <PasswordRules>
@@ -61,7 +94,15 @@ function SignupView() {
             <li>Conter pelo menos um caractere especial</li>
           </PasswordRules>
         </PasswordRulesContainer>
-        <DefaultButton type="submit">Cadastrar</DefaultButton>
+        <DefaultButton disabled={ isLoading } type="submit">
+          {
+            isLoading
+            ?
+            <ButtonLoading widthLoader={ 100 } />
+            :
+            "Cadastrar"
+          }
+        </DefaultButton>
       </DefaultForm>
       <Link to="/">Já tem uma conta? Entre agora!</Link>
     </MainContainer>

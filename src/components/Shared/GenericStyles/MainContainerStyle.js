@@ -14,6 +14,7 @@ const MainContainer = styled.div`
     font-size: 16px;
     font-weight: bold;
     color: #FFFFFF;
+    margin-bottom: 20px;
   }
 `;
 

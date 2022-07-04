@@ -7,6 +7,7 @@ function Brand() {
 }
 
 const BrandName = styled.h1`
+  margin-top: 20px;
   font-family: 'Saira Stencil One', cursive;
   font-size: 32px;
 `;
