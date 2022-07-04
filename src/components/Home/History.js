@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 function History({ userData }) {
+  const thereIsUserData = userData.transactions !== undefined && userData.transactions?.length > 0;
+
   return(
-    <HistoryContainer thereIsData={ userData.transactions }>
+    <HistoryContainer thereIsData={ thereIsUserData }>
       {
-        userData.totalTransactions
+        thereIsUserData
         ?
         <>
           <Transactions>
@@ -38,16 +40,18 @@ const HistoryContainer = styled.div`
   justify-content: ${ ({ thereIsData }) => thereIsData ? "space-between" : "center"};
   align-items: center;
   width: 92%;
-  min-height: 70vh;
-  padding: 12px;
+  height: 70vh;
   color: black;
   background-color: #FFFFFF;
   border-radius: 6px;
-`;
+  `;
 
 const Transactions = styled.ul`
   width: 100%;
-`;
+  padding: 12px;
+  max-height: 90%;
+  overflow-y: scroll;
+  `;
 
 const Transaction = styled.li`
   display: flex;
@@ -58,7 +62,7 @@ const Transaction = styled.li`
   span:first-child {
     color: #C6C6C6
   }
-
+  
   span:last-child {
     color: ${({ status }) => status === "entrace" ? "#03AC00" : "#C70000"}
   }
@@ -72,13 +76,14 @@ const TransactionDescripton = styled.span`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+  `;
 
 const TotalTransations = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 12px;
   font-size: 18px;
   
   span:first-child {
