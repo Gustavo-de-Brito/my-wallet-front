@@ -29,7 +29,7 @@ function SignupView() {
     }
 
     try {
-      await axios.post("http://localhost:5000/sign-up", body);
+      await axios.post("https://my-wallet726.herokuapp.com/sign-up", body);
 
       navigate("/");
     } catch (err) {

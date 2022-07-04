@@ -25,7 +25,7 @@ function Home() {
       };
 
       try{
-        const response = await axios.get("http://localhost:5000/transactions", config);
+        const response = await axios.get("https://my-wallet726.herokuapp.com/transactions", config);
 
         setUserData(response.data);
       } catch(err) {

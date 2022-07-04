@@ -35,7 +35,7 @@ function NewExit() {
     };
 
     try {
-      await axios.post("http://localhost:5000/transactions", body, config);
+      await axios.post("https://my-wallet726.herokuapp.com/transactions", body, config);
 
       navigate("/home");
     } catch(err) {

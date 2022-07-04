@@ -27,7 +27,7 @@ function LoginView() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/login", body);
+      const response = await axios.post("https://my-wallet726.herokuapp.com/login", body);
 
       setToken(response.data.token);
       setUserName(response.data.userName);
