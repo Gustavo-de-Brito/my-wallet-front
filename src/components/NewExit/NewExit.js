@@ -7,10 +7,12 @@ import TokenContext from "../contexts/TokenContext.js"
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultForm from "../Shared/GenericStyles/DefaultFormStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
+import LoginAgainMessage from "../Shared/LoginAgainMessage.js";
 
 function NewExit() {
   const [ value, setValue ] = useState("R$ 0.00");
   const [ description, setDescription ] = useState("");
+  const [ userUnauthorized, setUserUnauthorized ] = useState(false);
 
   const { token } = useContext(TokenContext);
 
@@ -39,7 +41,11 @@ function NewExit() {
 
       navigate("/home");
     } catch(err) {
-      alert("Ocorreu um erro ao tentar enviar a saida");
+      if(err.response.status === 401) {
+        setUserUnauthorized(true);
+      } else {
+        alert("Ocorreu um erro ao tentar enviar a saída");
+      }
     }
   }
 
@@ -59,16 +65,22 @@ function NewExit() {
 
   return (
     <MainContainer>
-      <ViewContent>
-        <Header>
-          <h2>Nova Saída</h2>
-        </Header>
-        <DefaultForm onSubmit={ sendTransaction } >
-          <input value={ value } onChange={ formatMoneyValue } type="text" placeholder="Valor" required />
-          <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
-          <DefaultButton type="submit">Salvar Saída</DefaultButton>
-        </DefaultForm>
-      </ViewContent>
+      {
+        userUnauthorized
+        ?
+        <LoginAgainMessage />
+        :
+        <ViewContent>
+          <Header>
+            <h2>Nova Saída</h2>
+          </Header>
+          <DefaultForm onSubmit={ sendTransaction } >
+            <input value={ value } onChange={ formatMoneyValue } type="text" placeholder="Valor" required />
+            <input value={ description } onChange={ e => setDescription(e.target.value) }  type="text" placeholder="Descrição" required />
+            <DefaultButton type="submit">Salvar Saída</DefaultButton>
+          </DefaultForm>
+        </ViewContent>
+      }
     </MainContainer>
   );
 }

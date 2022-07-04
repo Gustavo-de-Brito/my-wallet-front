@@ -7,11 +7,13 @@ import UserNameContext from "../contexts/UserNameContext";
 import MainContainer from "../Shared/GenericStyles/MainContainerStyle";
 import DefaultButton from "../Shared/GenericStyles/DefaultButtonStyle";
 import History from "./History";
+import LoginAgainMessage from "../Shared/LoginAgainMessage";
 import { IoExitOutline } from "react-icons/io5";
 import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io";
 
 function Home() {
   const [ userData, setUserData ] = useState({});
+  const [ userUnauthorized, setUserUnauthorized ] = useState(false);
 
   const { token, setToken } = useContext(TokenContext);
   const { userName, setUserName } = useContext(UserNameContext);
@@ -39,7 +41,10 @@ function Home() {
 
         setUserData(response.data);
       } catch(err) {
-        console.log(err)
+        console.log(err);
+        if(err.response.status === 401) {
+          setUserUnauthorized(true);
+        }
       }
     }
 
@@ -48,27 +53,33 @@ function Home() {
 
   return(
     <MainContainer>
-      <ViewContent>
-        <Header>
-          <h2>Olá, { userName }</h2>
-          <IoExitOutline onClick={ logoutUser } style={{color:"#FFFFFF", cursor: "pointer" }} />
-        </Header>
-        <History userData={ userData } />
-        <InOutButtons>
-          <Link to="/new-entrace">
-            <DefaultButton>
-              <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-              Nova Entrada
-            </DefaultButton>
-          </Link>
-          <Link to="/new-exit">
-            <DefaultButton>
-              <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
-              Nova Saída
-            </DefaultButton>
-          </Link>
-        </InOutButtons>
-      </ViewContent>
+      {
+        userUnauthorized
+        ?
+        <LoginAgainMessage />
+        :
+        <ViewContent>
+          <Header>
+            <h2>Olá, { userName }</h2>
+            <IoExitOutline onClick={ logoutUser } style={{color:"#FFFFFF", cursor: "pointer" }} />
+          </Header>
+          <History userData={ userData } />
+          <InOutButtons>
+            <Link to="/new-entrace">
+              <DefaultButton>
+                <IoMdAddCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+                Nova Entrada
+              </DefaultButton>
+            </Link>
+            <Link to="/new-exit">
+              <DefaultButton>
+                <IoMdRemoveCircleOutline style={{fontSize: "26px", marginBottom: "30px"}} />
+                Nova Saída
+              </DefaultButton>
+            </Link>
+          </InOutButtons>
+        </ViewContent>
+      }
     </MainContainer>
   );
 }
