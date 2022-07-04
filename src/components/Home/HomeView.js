@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
@@ -13,8 +13,18 @@ import { IoMdRemoveCircleOutline, IoMdAddCircleOutline } from "react-icons/io";
 function Home() {
   const [ userData, setUserData ] = useState({});
 
-  const { token } = useContext(TokenContext);
-  const { userName } = useContext(UserNameContext);
+  const { token, setToken } = useContext(TokenContext);
+  const { userName, setUserName } = useContext(UserNameContext);
+
+  const navigate = useNavigate();
+
+  function logoutUser() {
+    setToken("");
+    setUserName("");
+    setUserData({});
+
+    navigate("/");
+  }
 
   useEffect(() => {
     async function getTransaction() {
@@ -41,7 +51,7 @@ function Home() {
       <ViewContent>
         <Header>
           <h2>Olá, { userName }</h2>
-          <IoExitOutline style={{color:"#FFFFFF"}} />
+          <IoExitOutline onClick={ logoutUser } style={{color:"#FFFFFF", cursor: "pointer" }} />
         </Header>
         <History userData={ userData } />
         <InOutButtons>
