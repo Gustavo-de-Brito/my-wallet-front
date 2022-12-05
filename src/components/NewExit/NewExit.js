@@ -40,7 +40,8 @@ function NewExit() {
     };
 
     try {
-      await axios.post("https://my-wallet726.herokuapp.com/transactions", body, config);
+      const API_URL = process.env.REACT_APP_API_URL;
+      await axios.post(`${ API_URL }/transactions`, body, config);
 
       navigate("/home");
     } catch(err) {

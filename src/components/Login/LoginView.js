@@ -30,7 +30,8 @@ function LoginView() {
     }
 
     try {
-      const response = await axios.post("https://my-wallet726.herokuapp.com/login", body);
+      const API_URL = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${ API_URL }/login`, body);
 
       setToken(response.data.token);
       setUserName(response.data.userName);

@@ -34,7 +34,8 @@ function SignupView() {
     }
 
     try {
-      await axios.post("https://my-wallet726.herokuapp.com/sign-up", body);
+      const API_URL = process.env.REACT_APP_API_URL;
+      await axios.post(`${ API_URL }/sign-up`, body);
 
       navigate("/");
     } catch (err) {

@@ -39,7 +39,8 @@ function Home() {
       };
 
       try{
-        const response = await axios.get("https://my-wallet726.herokuapp.com/transactions", config);
+        const API_URL = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${ API_URL }/transactions`, config);
 
         setIsLoading(false);
         setUserData(response.data);
