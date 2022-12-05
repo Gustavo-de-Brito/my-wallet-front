@@ -41,8 +41,7 @@ function NewEntrace() {
     };
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
-      await axios.post(`${ API_URL }/transactions`, body, config);
+      await axios.post(`https://my-wallet-back-5nte.onrender.com/transactions`, body, config);
 
       navigate("/home");
     } catch(err) {

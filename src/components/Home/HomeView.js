@@ -39,8 +39,7 @@ function Home() {
       };
 
       try{
-        const API_URL = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${ API_URL }/transactions`, config);
+        const response = await axios.get(`https://my-wallet-back-5nte.onrender.com/transactions`, config);
 
         setIsLoading(false);
         setUserData(response.data);

@@ -30,8 +30,7 @@ function LoginView() {
     }
 
     try {
-      const API_URL = process.env.REACT_APP_API_URL;
-      const response = await axios.post(`${ API_URL }/login`, body);
+      const response = await axios.post(`https://my-wallet-back-5nte.onrender.com/login`, body);
 
       setToken(response.data.token);
       setUserName(response.data.userName);

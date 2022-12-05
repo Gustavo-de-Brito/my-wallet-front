@@ -35,7 +35,7 @@ function SignupView() {
 
     try {
       const API_URL = process.env.REACT_APP_API_URL;
-      await axios.post(`${ API_URL }/sign-up`, body);
+      await axios.post(`https://my-wallet-back-5nte.onrender.com/sign-up`, body);
 
       navigate("/");
     } catch (err) {
